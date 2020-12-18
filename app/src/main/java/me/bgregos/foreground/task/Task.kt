@@ -15,7 +15,7 @@ data class Task(var name:String) : Serializable {
     var uuid:UUID = UUID.randomUUID()
     var dueDate:Date? = null
     var createdDate:Date = Date()
-    var project:String? = null
+    var project:String? = "inbox"
     var tags:ArrayList<String> = ArrayList()
     var modifiedDate:Date? = null
     var priority: String? = ""
