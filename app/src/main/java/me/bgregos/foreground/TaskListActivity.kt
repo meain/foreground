@@ -3,6 +3,7 @@ package me.bgregos.foreground
 import android.app.Activity
 import android.content.*
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.media.Image
 import android.opengl.Visibility
@@ -22,6 +23,7 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.activity_task_list.*
 import kotlinx.android.synthetic.main.task_list.*
@@ -36,6 +38,7 @@ import me.bgregos.foreground.util.ShowErrorDetail
 import org.w3c.dom.Text
 import java.io.File
 import java.net.URL
+import java.security.AccessController.getContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -124,11 +127,11 @@ class TaskListActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
         val syncRotateAnimation = RotateAnimation(360f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
         syncRotateAnimation.duration = 1000
         syncRotateAnimation.repeatCount = Animation.INFINITE
-        val syncButton = this.findViewById<View>(R.id.action_sync)
+        val syncButton = this.findViewById<View>(action_sync)
         syncButton.clearAnimation()
         syncButton.startAnimation(syncRotateAnimation)
 
-        val prefs = this.getSharedPreferences("me.bgregos.BrightTask", Context.MODE_PRIVATE)
+        val prefs = this.getSharedPreferences("me.bgregos.BrightTask", MODE_PRIVATE)
         if (prefs.getBoolean("settings_sync", false)){
             val bar = Snackbar.make(task_list_parent, "Syncing...", Snackbar.LENGTH_SHORT)
             bar.view.setBackgroundColor(Color.parseColor("#34309f"))
@@ -173,7 +176,7 @@ class TaskListActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_show_waiting -> {
+            menu_show_waiting -> {
                 Log.i("recyclerview item count", task_list.adapter?.itemCount.toString())
                 item.isChecked = !item.isChecked
                 LocalTasks.showWaiting = true
@@ -183,7 +186,7 @@ class TaskListActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
                 Log.i("recyclerview item count", task_list.adapter?.itemCount.toString() + ","+ LocalTasks.visibleTasks.size.toString())
                 true
             }
-            R.id.menu_hide_waiting -> {
+            menu_hide_waiting -> {
                 Log.i("recyclerview item count", task_list.adapter?.itemCount.toString())
                 item.isChecked = !item.isChecked
                 LocalTasks.showWaiting = false
@@ -263,7 +266,7 @@ class TaskListActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
     }
 
     class SimpleItemRecyclerViewAdapter(private val parentActivity: TaskListActivity,
-                                        private var values: java.util.ArrayList<Task>,
+                                        private var values: ArrayList<Task>,
                                         private val twoPane: Boolean) :
             RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
 

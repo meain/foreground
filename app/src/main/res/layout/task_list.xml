@@ -6,8 +6,9 @@
     android:name="me.bgregos.brighttask.TaskListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:background="#000000"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".TaskListActivity"
     tools:listitem="@layout/task_list_content" />
