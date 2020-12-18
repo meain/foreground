@@ -47,6 +47,57 @@ data class Task(var name:String) : Serializable {
 
     }
 
+    class PriorityCompare : Comparator<Task>{
+        override fun compare(o1: Task, o2: Task): Int {
+            // var pirTable = [["H","M",1], ["M", "H", -1], ["H", "L", 1], ["M", "L", 1], ["L", "H", -1], ["L", "M", -1]]
+            if (o1.priority == null && o2.priority == null) {
+                return 0;
+            }
+
+            if (o1.priority == null) {
+                return 1;
+            }
+
+            if (o2.priority == null) {
+                return -1;
+            }
+
+            if (o1.priority == o2.priority){
+                if (o1.dueDate == null && o2.dueDate == null) {
+                    return 0;
+                }
+
+                if (o1.dueDate == null) {
+                    return 1;
+                }
+
+                if (o2.dueDate == null) {
+                    return -1;
+                }
+
+                val out = compareValues(o1.dueDate, o2.dueDate)
+                if (out != 0) {
+                    return out
+                }
+                return compareValues(o1.createdDate, o2.createdDate)
+            }
+
+            if (o1.priority == "H") {
+                return -1
+            } else if (o1.priority == "M") {
+                if (o2.priority == "H") {
+                    return 1
+                } else {
+                    return -1
+                }
+            } else {
+                return 1
+            }
+            return 0
+        }
+
+    }
+
     companion object {
 
         fun shouldDisplay(task:Task):Boolean{

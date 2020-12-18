@@ -141,8 +141,8 @@ object LocalTasks {
                 }
             }
         }
-        visibleTasks.sortWith(Task.DateCompare())
-        items.sortWith(Task.DateCompare())
+        visibleTasks.sortWith(Task.PriorityCompare())
+        items.sortWith(Task.PriorityCompare())
     }
 
     fun getTaskByUUID(uuid: UUID): Task?{
